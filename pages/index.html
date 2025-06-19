@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPro - Профессиональный автосервис</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип AutoPro">
+                    <h1>AutoPro</h1>
+                </div>
+
+                <div class="nav-links">
+                    <a href="/" class="active">Главная</a>
+                    <a href="/services">Каталог услуг</a>
+                    <a href="/about">О нас</a>
+                    <a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/reviews/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a>
+                    {% if session.get('username') %}
+                    <a href="/orders">Активные заказы</a>
+                    {% endif %}
+                </div>
+
+                <div class="user-info">
+                    {% if session.get('username') %}
+                    <div class="login_nickname">
+                        <span class="username">{{ session['username'] }}</span>
+                    </div>
+                    {% endif %}
+
+                    <button class="contact-btn" onclick="openContactModal()">
+                        <i class="fas fa-phone-alt"></i> Контакты
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+<section class="hero">
+            <img src="{{ url_for('static', filename='images/HeroBG.jpg') }}" alt="Фон" class="hero-bg" />
+
+            <div class="hero-content">
+                <h2>Профессиональный уход для вашего автомобиля</h2>
+                <p>Полный спектр услуг по ремонту и обслуживанию автомобилей любых марок. Работаем с 2010 года.</p>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <a href="/services" class="btn btn-primary">
+                        <i class="fas fa-tools"></i> Каталог услуг
+                    </a>
+                    <button class="btn btn-secondary" onclick="openContactModal()">
+                        <i class="fas fa-phone-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Почему выбирают нас</h2>
+                    <p>Наши преимущества, которые делают нас лучшим выбором для вашего автомобиля</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Опытные мастера</h3>
+                        <p>Наши специалисты имеют более 10 лет опыта работы с автомобилями различных марок</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Оригинальные запчасти</h3>
+                        <p>Используем только сертифицированные запчасти от проверенных поставщиков</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Гарантия качества</h3>
+                        <p>Предоставляем гарантию до 2 лет на все виды работ и установленные запчасти</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-preview">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Популярные услуги</h2>
+                    <p>Самые востребованные услуги нашего автосервиса</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-img" style="background-image: url('https://avatars.mds.yandex.net/get-altay/12595784/2a0000018ffcdaff8c0b0ce93c6faee8db57/orig');"></div>
+                        <div class="service-content">
+                            <h3>Диагностика</h3>
+                            <p>Комплексная проверка всех систем автомобиля</p>
+                            <span class="service-price">от 5 000 ₽</span>
+                            <a href="/services" class="btn btn-primary" style="width: 100%;">Подробнее</a>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-img" style="background-image: url('https://avatars.mds.yandex.net/i?id=0bbd28dca9c2c9a76fba12c2ca6c27bb39c97d1e-10555283-images-thumbs&n=13');"></div>
+                        <div class="service-content">
+                            <h3>Замена масла</h3>
+                            <p>С полной диагностикой состояния двигателя</p>
+                            <span class="service-price">от 2 000 ₽</span>
+                            <a href="/services" class="btn btn-primary" style="width: 100%;">Подробнее</a>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-img" style="background-image: url('https://media1.tenor.com/m/TBIvNMgsZQcAAAAd/wegoskee.gif');"></div>
+                        <div class="service-content">
+                            <h3>Ремонт тормозов</h3>
+                            <p>Замена колодок, дисков, тормозной жидкости</p>
+                            <span class="service-price">от 3 000 ₽</span>
+                            <a href="/services" class="btn btn-primary" style="width: 100%;">Подробнее</a>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-img" style="background-image: url('https://avatars.mds.yandex.net/i?id=2d194680b86824758b134714dd5eaf8e_l-5273802-images-thumbs&n=13');"></div>
+                        <div class="service-content">
+                            <h3>Компьютерная диагностика</h3>
+                            <p>Считывание и анализ ошибок электронных систем</p>
+                            <span class="service-price">от 4 500 ₽</span>
+                            <a href="/services" class="btn btn-primary" style="width: 100%;">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>Готовы записаться на обслуживание?</h2>
+                <p>Оставьте заявку и мы подберем для вас удобное время посещения сервиса</p>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-primary" style="padding: 12px 30px;" onclick="openContactModal()">
+                        <i class="fas fa-phone-alt"></i> Позвонить
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Отзывы клиентов</h2>
+                    <p>Что говорят о нас наши клиенты</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            Очень крутой автосервис!
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ url_for('static', filename='images/KostyaShular.jpg') }}" alt="Костя Шуляр" class="author-avatar">
+                            <div class="author-info">
+                                <h4>Костя Шуляр</h4>
+                                <p>Владелец Toyota Camry</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">Сделали качественно и быстро, еще и скидку дали</div>
+                        <div class="testimonial-author">
+                            <img src="{{ url_for('static', filename='images/DenisPyaticov.jpg') }}" alt="Денис Пятиков" class="author-avatar">
+                            <div class="author-info">
+                                <h4>Денис Пятиков</h4>
+                                <p>Владелец Mersedes Benz</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">Отличный сервис, опытные сотрудники</div>
+                        <div class="testimonial-author">
+                            <img src="{{ url_for('static', filename='images/Tracie.png') }}" alt="Мистер Бимба" class="author-avatar">
+                            <div class="author-info">
+                                <h4>Илья Решетняк</h4>
+                                <p>Владелер Lamborgini</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            Я чинил здесь свой кромвелёк! По случаю дня рождения сделали скидку 50%
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ url_for('static', filename='images/VladislavGarpunovich.jpg') }}" alt="Владислав Гарпунович" class="author-avatar">
+                            <div class="author-info">
+                                <h4>Владислав Гарпунович</h4>
+                                <p>Владелец ВАЗ2114</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">Круто, быстро, качественно!</div>
+                        <div class="testimonial-author">
+                            <img src="https://avatars.mds.yandex.net/i?id=99bbcd1fe86c9d67fe39317bcc63529dc4a6e990-5238923-images-thumbs&n=13" alt="Дядя Тема" class="author-avatar">
+                            <div class="author-info">
+                                <h4>Артём Некий</h4>
+                                <p>Владелец Lada Granta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h3>AutoPro</h3>
+                        <p>Профессиональный автосервис с 2010 года. Качественный ремонт и обслуживание автомобилей любых марок.</p>
+                        <div class="social-links">
+                            <a href="https://vk.com/pshenichnikov99" target="_blank"><i class="fab fa-vk"></i></a>
+                            <a href="https://t.me/l1ronee" target="_blank"><i class="fab fa-telegram"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3>Компания</h3>
+                        <ul class="footer-links">
+                            <li><a href="/about">О нас</a></li>
+                            <li><a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a></li>
+                            <li><a href="/login">Вход для персонала</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3>Контакты</h3>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> г. Нижневартовск, ул. Дзержинского, 11</a></li>
+                            <li><a href="#"><i class="fas fa-phone"></i> +7 (495) 228-14-88</a></li>
+                            <li><a href="#"><i class="fas fa-envelope"></i> info@autopro.ru</a></li>
+                            <li><a href="#"><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00</a></li>
+                            <li><a href="#"><i class="fas fa-clock"></i> Сб-Вс: 10:00-18:00</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <p>&copy; 2023 AutoPro. Все права защищены. <strong>Разработчик:</strong> Алексей Пшеничников. <strong>Email:</strong> l1rone@mail.ru</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Contact Modal -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeModal('contactModal')">&times;</button>
+                <h3 class="modal-title">Наши контакты</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Адрес: г. Москва, ул. Автосервисная, 12</p>
+                <p><i class="fas fa-phone"></i> Телефон: +7 (495) 123-45-67</p>
+                <p><i class="fas fa-envelope"></i> Email: info@autopro.ru</p>
+                <p><i class="fas fa-clock"></i> Режим работы: Пн-Пт 9:00-20:00, Сб-Вс 10:00-18:00</p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('AutoPro website loaded');
+            });
+
+            // Modal functions
+            function openContactModal() {
+                const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                document.getElementById('contactModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = `${scrollbarWidth}px`;
+            }
+
+            function closeModal(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+                document.body.style.overflow = 'auto';
+                document.body.style.marginRight = '';
+            }
+
+            window.onclick = function(event) {
+                if (event.target.className === 'modal') {
+                    closeModal(event.target.id);
+                }
+            }
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'flex') {
+                            closeModal(modal.id);
+                        }
+                    });
+                }
+            });
+
+            function openLogin() {
+                window.location.href = "/login.html";
+            }
+        </script>
+    </body>
+</html>

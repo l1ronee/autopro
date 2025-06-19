@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказы - AutoPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип AutoPro">
+                <h1>AutoPro</h1>
+            </div>
+
+            <div class="nav-links">
+                <a href="/" class="active">Главная</a>
+                <a href="/services">Каталог услуг</a>
+                <a href="/about">О нас</a>
+                <a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/reviews/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a>
+                {% if session.get('username') %}
+                <a href="/orders">Мои заказы</a>
+                <a href="/export_orders_to_excel" class="btn btn-export" download>
+                    <i class="fas fa-file-excel"></i> Экспорт в Excel
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="user-info">
+                {% if session.get('username') %}
+                <div class="login_nickname">
+                    <span class="username">{{ session['username'] }}</span>
+                </div>
+                {% endif %}
+
+                <button class="contact-btn" onclick="openContactModal()">
+                    <i class="fas fa-phone-alt"></i> Контакты
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="orders-hero">
+    <div class="wide-orders-container">
+        <div class="orders-table-wrapper">
+            <h2>Мои заказы</h2>
+            {% if orders %}
+            <table class="orders-table">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Метод оплаты</th>
+                    <th>Услуги</th>
+                    <th>Сумма</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.number }}</td>
+                    <td>{{ order.first_name }}</td>
+                    <td>{{ order.last_name }}</td>
+                    <td>{{ order.payment_method }}</td>
+                    <td>
+                        <div class="services-cards">
+                            {% for service, price in order.services %}
+                            <div class="service-card">
+                                <span class="service-name">{{ service }}</span>
+                                <span class="service-price">
+                                    {{ price }} ₽
+                                </span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>{{ order.total_cost }} ₽</td>
+                    <td>{{ order.created_at }}</td>
+                    <td class="status-{{ order.status }}">{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-orders-message">У вас пока нет заказов.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>AutoPro</h3>
+                <p>Профессиональный автосервис с 2010 года. Качественный ремонт и обслуживание автомобилей любых марок.</p>
+                <div class="social-links">
+                    <a href="https://vk.com/pshenichnikov99" target="_blank"><i class="fab fa-vk"></i></a>
+                    <a href="https://t.me/l1ronee" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Компания</h3>
+                <ul class="footer-links">
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a></li>
+                    <li><a href="/login">Вход для персонала</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> г. Нижневартовск, ул. Дзержинского, 11</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +7 (495) 228-14-88</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@autopro.ru</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Сб-Вс: 10:00-18:00</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2023 AutoPro. Все права защищены. <strong>Разработчик:</strong> Алексей Пшеничников. <strong>Email:</strong> l1rone@mail.ru</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Открытие модального окна
+    function showErrorModal(message) {
+        document.getElementById('errorMessage').innerText = message;
+        document.getElementById('errorModal').style.display = 'flex';
+    }
+
+    // Закрытие модального окна
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('errorModal').style.display = 'none';
+    });
+
+    // Закрытие модального окна, если пользователь нажимает вне модального окна
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('errorModal')) {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+    };
+</script>
+
+</body>
+</html>

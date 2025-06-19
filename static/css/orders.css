@@ -1,0 +1,505 @@
+/* Orders Page Specific Styles */
+.orders-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-image: url('../images/BGHeroCar.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0 60px; /* отступ сверху под хэдер */
+}
+
+.orders-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)); /* <- затемнение */
+    z-index: 1;
+}
+
+.wide-orders-container {
+    position: relative;
+    z-index: 2;
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffffea;
+    border-radius: 18px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.12);
+    overflow-x: auto;
+}
+
+.orders-table-wrapper h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.orders-table {
+    width: 100%;
+    min-width: 2400px; /* Увеличено в 1.5 раза */
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px; /* Увеличен размер шрифта */
+    color: #333;
+}
+
+.orders-table thead {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 14px 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Стиль для ячеек в столбце "Услуги" */
+.orders-table td:nth-child(8) {
+    min-width: 600px; /* Больше пространства под карточки */
+    text-align: left;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.services-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Увеличен отступ между карточками */
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.service-card {
+    width: calc(16.66% - 15px); /* 6 карточек в строке */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 10px; /* Уменьшили padding для уменьшения высоты карточек */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px); /* Эффект поднятия карточки при наведении */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+}
+
+.service-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Уменьшаем отступ между названием и ценой */
+    color: #333;
+}
+
+.service-price {
+    font-size: 14px;
+    color: #4CAF50; /* Зеленый цвет для цены */
+    margin-top: 5px; /* Уменьшаем отступ между ценой и нижним краем */
+}
+
+/* Увеличиваем размер шрифта в таблице */
+.orders-table th, .orders-table td {
+    font-size: 18px; /* Увеличиваем размер шрифта для заголовков и ячеек */
+}
+
+/* Медиазапросы для адаптивного дизайна */
+@media (max-width: 1200px) {
+    .service-card {
+        width: calc(20% - 15px); /* Уменьшаем размер карточек для меньших экранов */
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        width: calc(33.33% - 15px); /* 3 карточки в строке для мобильных */
+    }
+}
+
+@media (max-width: 480px) {
+    .service-card {
+        width: 100%;  /* 1 карточка в строке для очень маленьких экранов */
+    }
+}
+
+/* Стиль для ячеек в столбце "Услуги" */
+.orders-table td:nth-child(8) {
+    min-width: 700px; /* Больше пространства под карточки */
+    text-align: left;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.services-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Увеличен отступ между карточками */
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.service-card {
+    width: calc(16.66% - 15px); /* 6 карточек в строке */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px); /* Эффект поднятия карточки при наведении */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+}
+
+.service-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.service-price {
+    font-size: 14px;
+    color: #4CAF50; /* Зеленый цвет для цены */
+    margin-top: 10px;
+}
+
+@media (max-width: 1200px) {
+    .service-card {
+        width: calc(20% - 15px); /* Уменьшаем размер карточек для меньших экранов */
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        width: calc(33.33% - 15px); /* 3 карточки в строке для мобильных */
+    }
+}
+
+@media (max-width: 480px) {
+    .service-card {
+        width: 100%;  /* 1 карточка в строке для очень маленьких экранов */
+    }
+}
+
+/* Общие стили для страницы */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+/* Hero секция для логина */
+.login-hero {
+    position: relative;
+    height: 66vh; /* Уменьшаем высоту секции, чтобы картинка была меньше */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.login-hero img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.login-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)); /* Тёмный наложение */
+    z-index: 2;
+}
+
+.login-container {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+}
+
+.login-form h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--primary); /* Основной цвет */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary); /* Цвет фокуса */
+    outline: none;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary); /* Основной цвет */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--secondary); /* Вторичный цвет */
+}
+
+.signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.signup-text a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.signup-text a:hover {
+    color: var(--secondary);
+}
+
+
+/* Стили для модальных окон */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 9999; /* Поверх других элементов */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Центрирование окна */
+    overflow: hidden;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 40%; /* Размер модального окна */
+    max-width: 500px; /* Ограничиваем максимальную ширину */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Добавляем тень */
+    text-align: center; /* Центрируем текст */
+}
+/* Стили для модальных окон */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 9999; /* Поверх других элементов */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Более темный полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Центрирование окна */
+    transition: opacity 0.3s ease; /* Плавное появление окна */
+}
+
+/* Стили для модальных окон */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 9999; /* Поверх других элементов */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Более темный полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Центрирование окна */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px; /* Округленные углы */
+    width: 50%; /* Увеличим размер окна */
+    max-width: 600px; /* Ограничим максимальную ширину */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Добавляем красивую тень */
+    text-align: center; /* Центрируем текст */
+}
+
+.error-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c; /* Цвет заголовка ошибки */
+    margin-bottom: 20px; /* Отступ от заголовка */
+}
+
+.error-message {
+    font-size: 22px; /* Увеличим размер шрифта для сообщения */
+    font-weight: bold;
+    color: #e74c3c; /* Красный цвет для текста ошибки */
+    margin-top: 10px; /* Добавляем отступ сверху */
+    padding: 10px;
+    width: 100%; /* Чтобы он занимал всю ширину */
+    text-align: center; /* Центрируем текст */
+}
+
+/* Стили для кнопки закрытия */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #f00; /* Красный цвет при наведении */
+    text-decoration: none;
+}
+
+/* Плавное появление модального окна */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* Плавное появление модального окна */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal .error-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d9534f; /* Красный цвет для заголовка ошибки */
+    margin-bottom: 15px;
+}
+
+.modal .error-message {
+    font-size: 16px;
+    color: #333;
+}
+
+
+.btn-export {
+    background-color: #217346;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 15px;
+}
+
+.btn-export:hover {
+    background-color: #1a5e38;
+    color: white;
+}
+/* Респонсивные стили */
+@media (max-width: 768px) {
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+    }
+
+    .login-form {
+        padding: 20px;
+    }
+
+    .login-form h2 {
+        font-size: 1.6rem;
+    }
+}

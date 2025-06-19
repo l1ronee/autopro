@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPro - Сервис автомобильных услуг</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип AutoPro">
+                <h1>AutoPro</h1>
+            </div>
+
+            <div class="nav-links">
+                <a href="/">Главная</a>
+                <a href="/services" class="active">Каталог услуг</a>
+                <a href="/about">О нас</a>
+                <a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/reviews/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a>
+                {% if session.get('username') %}
+                <a href="/orders">Мои заказы</a>
+                {% endif %}
+            </div>
+
+            <div class="user-info">
+                {% if session.get('username') %}
+                <div class="login_nickname">
+                    <span class="username">{{ session['username'] }}</span>
+                </div>
+                {% endif %}
+
+                <button class="contact-btn" onclick="openContactModal()">
+                    <i class="fas fa-phone-alt"></i> Контакты
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main class="main">
+        <div class="container">
+            <div class="page-title">
+                <h2>Профессиональный автосервис</h2>
+                <p>Выберите необходимые услуги для вашего автомобиля. Наши специалисты обеспечат качественный ремонт и обслуживание.</p>
+            </div>
+
+            <div class="services-container">
+                <section class="services-section">
+                    <h3 class="section-title">Наши услуги</h3>
+                    <div class="services-list">
+                        <!-- Группа 1: Диагностика -->
+                        <div class="service-item">
+                            <label for="service1" class="service-checkbox">
+                                <input type="checkbox" id="service1" value="1" data-price="5000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Компьютерная диагностика
+                                        <span class="service-price">5 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Полная проверка электронных систем автомобиля с помощью профессионального сканера</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service2" class="service-checkbox">
+                                <input type="checkbox" id="service2" value="2" data-price="3500">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Диагностика подвески
+                                        <span class="service-price">3 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Проверка состояния амортизаторов, рычагов, шаровых опор и других элементов подвески</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Группа 2: Техническое обслуживание -->
+                        <div class="service-item">
+                            <label for="service3" class="service-checkbox">
+                                <input type="checkbox" id="service3" value="3" data-price="2000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена масла в двигателе
+                                        <span class="service-price">2 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена моторного масла с фильтром (масло в стоимость не входит)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service4" class="service-checkbox">
+                                <input type="checkbox" id="service4" value="4" data-price="2500">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена масла в АКПП
+                                        <span class="service-price">2 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена трансмиссионного масла в автоматической коробке передач</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service5" class="service-checkbox">
+                                <input type="checkbox" id="service5" value="5" data-price="8000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена фильтров (комплекс)
+                                        <span class="service-price">8 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена масляного, воздушного, салонного и топливного фильтров</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Группа 3: Тормозная система -->
+                        <div class="service-item">
+                            <label for="service6" class="service-checkbox">
+                                <input type="checkbox" id="service6" value="6" data-price="3000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена тормозных колодок
+                                        <span class="service-price">3 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена передних или задних тормозных колодок (одна ось)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service7" class="service-checkbox">
+                                <input type="checkbox" id="service7" value="7" data-price="5000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена тормозных дисков
+                                        <span class="service-price">5 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена передних или задних тормозных дисков (одна ось)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service8" class="service-checkbox">
+                                <input type="checkbox" id="service8" value="8" data-price="1500">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена тормозной жидкости
+                                        <span class="service-price">1 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Прокачка тормозной системы с заменой жидкости</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Группа 4: Электрика -->
+                        <div class="service-item">
+                            <label for="service9" class="service-checkbox">
+                                <input type="checkbox" id="service9" value="9" data-price="2500">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Диагностика электрического оборудования
+                                        <span class="service-price">2 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Проверка работоспособности электронных систем автомобиля</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service10" class="service-checkbox">
+                                <input type="checkbox" id="service10" value="10" data-price="2000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена аккумулятора
+                                        <span class="service-price">2 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Демонтаж старого и установка нового аккумулятора с проверкой зарядки</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Группа 5: Дополнительные услуги -->
+                        <div class="service-item">
+                            <label for="service11" class="service-checkbox">
+                                <input type="checkbox" id="service11" value="11" data-price="4000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Чистка инжектора
+                                        <span class="service-price">4 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Чистка топливных форсунок на ультразвуковом стенде</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service12" class="service-checkbox">
+                                <input type="checkbox" id="service12" value="12" data-price="3500">
+                                <div class="service-info">
+                                    <div class="service-name"> Замена свечей зажигания <span class="service-price">3 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена комплекта свечей зажигания (4 цилиндра)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service13" class="service-checkbox">
+                                <input type="checkbox" id="service13" value="13" data-price="6000">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена ремня ГРМ
+                                        <span class="service-price">6 000 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена ремня ГРМ с роликами (без стоимости запчастей)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="service-item">
+                            <label for="service14" class="service-checkbox">
+                                <input type="checkbox" id="service14" value="14" data-price="4500">
+                                <div class="service-info">
+                                    <div class="service-name">
+                                        Замена жидкости ГУР
+                                        <span class="service-price">4 500 ₽</span>
+                                    </div>
+                                    <div class="service-desc">Замена жидкости гидроусилителя руля с промывкой системы</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" onclick="addService()" style="margin-top: 15px;">
+                        <i class="fas fa-plus-circle"></i> Добавить выбранные услуги
+                    </button>
+                </section>
+
+                <section class="selected-services-section">
+                    <h3 class="section-title">Ваш заказ</h3>
+                    <ul id="selectedServicesList">
+                        <li class="empty-message">Выберите услуги из списка</li>
+                    </ul>
+                    
+                    <div class="total-cost">
+                        Итого: <span id="totalCost">0</span> ₽
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" onclick="openPaymentModal()">
+                        <i class="fas fa-credit-card"></i> Перейти к оплате
+                    </button>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>AutoPro</h3>
+                    <p>Профессиональный автосервис с 2010 года. Качественный ремонт и обслуживание автомобилей любых марок.</p>
+                    <div class="social-links">
+                        <a href="https://vk.com/pshenichnikov99" target="_blank"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/l1ronee" target="_blank"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Компания</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about">О нас</a></li>
+                        <li><a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a></li>
+                        <li><a href="/login">Вход для персонала</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> г. Нижневартовск, ул. Дзержинского, 11</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +7 (495) 228-14-88</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@autopro.ru</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Сб-Вс: 10:00-18:00</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AutoPro. Все права защищены. <strong>Разработчик:</strong> Алексей Пшеничников. <strong>Email:</strong> l1rone@mail.ru</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('contactModal')">&times;</button>
+            <h3 class="modal-title">Наши контакты</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Адрес: г. Москва, ул. Автосервисная, 12</p>
+            <p><i class="fas fa-phone"></i> Телефон: +7 (495) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> Email: info@autopro.ru</p>
+            <p><i class="fas fa-clock"></i> Режим работы: Пн-Пт 9:00-20:00, Сб-Вс 10:00-18:00</p>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('paymentModal')">&times;</button>
+            <h3 class="modal-title">Оплата услуг</h3>
+
+            <!-- Step 1: Contact Form -->
+            <div id="contactForm" style="display: block;">
+                <h4>Введите ваши данные</h4>
+                <form id="contactFormData">
+                    <div style="margin-bottom: 15px;">
+                        <label>Имя</label>
+                        <input type="text" id="firstName" placeholder="Ваше имя" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label>Фамилия</label>
+                        <input type="text" id="lastName" placeholder="Ваша фамилия" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="goToPayment()">Далее</button>
+                </form>
+            </div>
+
+            <!-- Step 2: Payment Form -->
+            <div id="paymentForm" style="display: none;">
+                <h4>Выберите способ оплаты</h4>
+
+                <div class="payment-methods">
+                    <button class="payment-option" onclick="selectPaymentMethod('card')">
+                        <i class="fab fa-cc-visa"></i> Банковская карта
+                    </button>
+                    <button class="payment-option" onclick="selectPaymentMethod('cash')">
+                        <i class="fas fa-money-bill-wave"></i> Наличные в сервисе
+                    </button>
+                </div>
+
+                <!-- Карточная форма -->
+                <div id="cardForm" style="display: none;">
+                    <div class="input-group">
+                        <label>Номер карты</label>
+                        <input type="text" placeholder="1234 5678 9012 3456">
+                    </div>
+
+                    <div class="card-details">
+                        <div class="input-group">
+                            <label>Срок действия</label>
+                            <input type="text" placeholder="MM/YY">
+                        </div>
+                        <div class="input-group">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="processPayment()">Оплатить <span id="modalTotalCost">0</span> ₽</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функция добавления услуг
+        function addService() {
+            const checkboxes = document.querySelectorAll('.service-checkbox input[type="checkbox"]:checked');
+            const selectedServicesList = document.getElementById('selectedServicesList');
+            const totalCostElement = document.getElementById('totalCost');
+
+            let totalCost = 0;
+            selectedServicesList.innerHTML = '';
+
+            if (checkboxes.length === 0) {
+                selectedServicesList.innerHTML = '<li class="empty-message">Выберите услуги из списка</li>';
+                totalCostElement.textContent = '0';
+                return;
+            }
+
+            checkboxes.forEach(checkbox => {
+                const serviceItem = checkbox.closest('.service-item');
+                const serviceNameElement = serviceItem.querySelector('.service-name');
+                const serviceName = serviceNameElement.firstChild.textContent.trim();
+                const servicePrice = parseInt(checkbox.dataset.price);
+                const serviceId = checkbox.value;
+
+                const listItem = document.createElement('li');
+                listItem.className = 'selected-service';
+                listItem.dataset.id = serviceId;
+                listItem.innerHTML = `
+                    <span>${serviceName}</span>
+                    <span class="service-price">${servicePrice.toLocaleString()} ₽</span>
+                    <button class="remove-service" onclick="removeService('${serviceId}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+
+                selectedServicesList.appendChild(listItem);
+                totalCost += servicePrice;
+            });
+
+            totalCostElement.textContent = totalCost.toLocaleString();
+        }
+
+        // Функция удаления услуги
+        function removeService(serviceId) {
+            const checkbox = document.querySelector(`.service-checkbox input[value="${serviceId}"]`);
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+            
+            const itemToRemove = document.querySelector(`.selected-service[data-id="${serviceId}"]`);
+            if (itemToRemove) {
+                itemToRemove.remove();
+            }
+            
+            updateTotal();
+            
+            const selectedServicesList = document.getElementById('selectedServicesList');
+            if (selectedServicesList.children.length === 0) {
+                selectedServicesList.innerHTML = '<li class="empty-message">Выберите услуги из списка</li>';
+            }
+        }
+
+        // Обновление общей стоимости
+        function updateTotal() {
+            const prices = document.querySelectorAll('.selected-service .service-price');
+            let totalCost = 0;
+            
+            prices.forEach(priceElement => {
+                const priceText = priceElement.textContent.replace(/\D/g, '');
+                totalCost += parseInt(priceText);
+            });
+            
+            document.getElementById('totalCost').textContent = totalCost.toLocaleString();
+        }
+
+        // Обработка оплаты
+        function processPayment(type = 'card') {
+    const totalCost = document.getElementById('totalCost').textContent;
+    if (totalCost === '0') {
+        alert("Выберите хотя бы одну услугу");
+        return;
+    }
+
+    const selectedServices = Array.from(document.querySelectorAll('.selected-service'))
+        .map(el => parseInt(el.dataset.id));
+
+    const orderData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        paymentMethod: type,
+        services: selectedServices,
+        totalCost: parseFloat(totalCost.replace(/\s/g, ''))
+    };
+
+    fetch('/order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) throw new Error(data.error);
+        alert(data.message);
+        closeModal('paymentModal');
+    })
+    .catch(error => {
+        alert("Ошибка: " + error.message);
+    });
+}
+
+        // Функции для работы с модальными окнами
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openPaymentModal() {
+            const totalCost = document.getElementById('totalCost').textContent;
+            if (totalCost === '0') {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
+                return;
+            }
+
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('cardForm').style.display = 'none';
+
+            document.getElementById('firstName').value = '';
+            document.getElementById('lastName').value = '';
+
+            document.getElementById('modalTotalCost').textContent = totalCost;
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function goToPayment() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+
+            if (!firstName || !lastName) {
+                alert("Пожалуйста, заполните все поля.");
+                return;
+            }
+
+            window.userData = { firstName, lastName };
+
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('paymentForm').style.display = 'block';
+
+            const totalCost = document.getElementById('totalCost').textContent;
+            document.getElementById('modalTotalCost').textContent = totalCost;
+        }
+
+        function selectPaymentMethod(method) {
+            if (method === 'card') {
+                document.getElementById('cardForm').style.display = 'block';
+            } else if (method === 'cash') {
+                document.getElementById('cardForm').style.display = 'none';
+                processPayment('cash');
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Закрытие модальных окон при клике вне их области
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                closeModal(event.target.id);
+            }
+        }
+
+        // Закрытие модальных окон по клавише Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'flex') {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

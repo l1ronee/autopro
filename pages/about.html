@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPro - О компании</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Использование url_for для корректного подключения CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип AutoPro">
+                <h1>AutoPro</h1>
+            </div>
+
+            <div class="nav-links">
+                <a href="/" class="active">Главная</a>
+                <a href="/services">Каталог услуг</a>
+                <a href="/about">О нас</a>
+                <a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/reviews/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a>
+                {% if session.get('username') %}
+                <a href="/orders">Активные заказы</a>
+                {% endif %}
+            </div>
+
+            <div class="user-info">
+                {% if session.get('username') %}
+                <div class="login_nickname">
+                    <span class="username">{{ session['username'] }}</span>
+                </div>
+                {% endif %}
+
+                <button class="contact-btn" onclick="openContactModal()">
+                    <i class="fas fa-phone-alt"></i> Контакты
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <section class="about-hero">
+        <img src="{{ url_for('static', filename='images/BGHeroCar.jpeg') }}" alt="О компании AutoPro">
+        <div class="container">
+            <h1>О компании AutoPro</h1>
+            <p>Профессиональный подход к вашему автомобилю с 2010 года</p>
+        </div>
+    </section>
+
+
+    <section class="about-story">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наша история</h2>
+                <p>Как мы стали лидерами автосервисного рынка</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h3>Основание компании</h3>
+                        <p>Открытие первого автосервиса с 3 сотрудниками и 1 подъемником</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2014</div>
+                    <div class="timeline-content">
+                        <h3>Расширение</h3>
+                        <p>Запуск второго сервисного центра и внедрение компьютерной диагностики</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <h3>Сертификация</h3>
+                        <p>Получение официального статуса сертифицированного сервиса для 5 марок автомобилей</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>Современный центр</h3>
+                        <p>Открытие флагманского центра с 12 постами и собственной мойкой</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наша команда</h2>
+                <p>Профессионалы с многолетним опытом</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+                    <h3>Иван Петров</h3>
+                    <p class="position">Главный механик</p>
+                    <p class="experience">Опыт: 15 лет</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
+                    <h3>Елена Смирнова</h3>
+                    <p class="position">Специалист по диагностике</p>
+                    <p class="experience">Опыт: 10 лет</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
+                    <h3>Алексей Иванов</h3>
+                    <p class="position">Мастер по электрике</p>
+                    <p class="experience">Опыт: 12 лет</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="achievements">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши достижения</h2>
+                <p>Чем мы гордимся</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10 000+</div>
+                    <p>Обслуженных автомобилей</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <p>Довольных клиентов</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <p>Профессиональных механиков</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <p>Эвакуационная служба</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>AutoPro</h3>
+                    <p>Профессиональный автосервис с 2010 года. Качественный ремонт и обслуживание автомобилей любых марок.</p>
+                    <div class="social-links">
+                        <a href="https://vk.com/pshenichnikov99" target="_blank"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/l1ronee" target="_blank"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Компания</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about">О нас</a></li>
+                        <li><a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a></li>
+                        <li><a href="/login">Вход для персонала</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> г. Нижневартовск, ул. Дзержинского, 11</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +7 (495) 228-14-88</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@autopro.ru</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Сб-Вс: 10:00-18:00</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AutoPro. Все права защищены. <strong>Разработчик:</strong> Алексей Пшеничников. <strong>Email:</strong> l1rone@mail.ru</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('contactModal')">&times;</button>
+            <h3 class="modal-title">Наши контакты</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Адрес: г. Москва, ул. Автосервисная, 12</p>
+            <p><i class="fas fa-phone"></i> Телефон: +7 (495) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> Email: info@autopro.ru</p>
+            <p><i class="fas fa-clock"></i> Режим работы: Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</p>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                modal.classList.add('modal-open');
+            }, 10);
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            modal.classList.remove('modal-open');
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        });
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'flex') {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

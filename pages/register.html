@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - AutoPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Шапка -->
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип AutoPro">
+                <h1>AutoPro</h1>
+            </div>
+
+            <div class="nav-links">
+                <a href="/" class="active">Главная</a>
+                <a href="/services">Каталог услуг</a>
+                <a href="/about">О нас</a>
+                <a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/reviews/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a>
+                {% if session.get('username') %}
+                <a href="/orders">Активные заказы</a>
+                {% endif %}
+            </div>
+
+            <div class="user-info">
+                {% if session.get('username') %}
+                <div class="login_nickname">
+                    <span class="username">{{ session['username'] }}</span>
+                </div>
+                {% endif %}
+
+                <button class="contact-btn" onclick="openContactModal()">
+                    <i class="fas fa-phone-alt"></i> Контакты
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="login-hero">
+    <img src="{{ url_for('static', filename='images/BGHeroCar.jpeg') }}" alt="Регистрация">
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Регистрация</h2>
+            <form method="POST" action="/register">
+                <div class="input-group">
+                    <label for="username">Логин</label>
+                    <input type="text" id="username" name="username" placeholder="Введите ваш логин" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Почта</label>
+                    <input type="email" id="email" name="email" placeholder="Введите ваш email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="Введите ваш пароль" required>
+                </div>
+                <button type="submit" class="btn-login">Зарегистрироваться</button>
+                <p class="signup-text">Уже есть аккаунт? <a href="/login">Войдите</a></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Модальное окно для успешной регистрации -->
+<div id="successModal" class="modal" style="display: {{ 'flex' if success_msg else 'none' }};">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Регистрация прошла успешно!</h2>
+        <p>Вы можете войти в систему, используя свои данные.</p>
+        <a href="{{ url_for('login') }}" class="btn-login">Перейти к логину</a>
+    </div>
+</div>
+
+<!-- Модальное окно ошибки -->
+<div id="errorModal" class="modal" style="display: {{ 'flex' if show_modal else 'none' }};">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="error-header">Ошибка</div>
+        <p id="errorMessage" class="error-message">{{ msg }}</p> <!-- Сообщение об ошибке -->
+    </div>
+</div>
+
+<!-- Футер -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>AutoPro</h3>
+                <p>Профессиональный автосервис с 2010 года. Качественный ремонт и обслуживание автомобилей любых марок.</p>
+                <div class="social-links">
+                    <a href="https://vk.com/pshenichnikov99" target="_blank"><i class="fab fa-vk"></i></a>
+                    <a href="https://t.me/l1ronee" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Компания</h3>
+                <ul class="footer-links">
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="https://yandex.ru/maps/org/dodo_pitstsa/2735692333/?from=mapframe&ll=76.572934%2C60.944777&utm_source=mapframe&z=17">Отзывы</a></li>
+                    <li><a href="/login">Вход для персонала</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> г. Нижневартовск, ул. Дзержинского, 11</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +7 (495) 228-14-88</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@autopro.ru</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Сб-Вс: 10:00-18:00</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2023 AutoPro. Все права защищены. <strong>Разработчик:</strong> Алексей Пшеничников. <strong>Email:</strong> l1rone@mail.ru</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Открытие модального окна
+    function showErrorModal(message) {
+        document.getElementById('errorMessage').innerText = message;
+        document.getElementById('errorModal').style.display = 'flex'; // Показать модальное окно
+    }
+
+    // Закрытие модального окна
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('errorModal').style.display = 'none';
+    });
+
+    // Закрытие модального окна, если пользователь нажимает вне модального окна
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('errorModal')) {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+    };
+
+    // Показываем модальное окно при успешной регистрации
+    {% if success_msg %}
+        document.getElementById('successModal').style.display = 'flex';
+    {% endif %}
+
+    // Закрытие модального окна
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('successModal').style.display = 'none';
+    });
+
+    // Закрытие модального окна, если пользователь нажимает вне модального окна
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('successModal')) {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    };
+</script>
+
+</body>
+</html>
